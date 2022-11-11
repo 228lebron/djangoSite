@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<style>
+table {
+    font: 12px, Calibri;
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.btn {
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Серый цвет фона */
+    color: #fff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px; /* Скругляем уголки */
+   }
+</style>
+<a href="{% url 'update_competitors' %}" class="btn">Обновить конкурентов</a>
+<table>
+    <tr>
+        <th>Part Number</th>
+        <th>Brand</th>
+        <th>Compel price</th>
+    </tr>
+    {% for q in quotes %}
+    <tr>
+        <td>{{ q.part_number }}</td>
+        <td>{{ q.brand }}</td>
+        <td>{{ q.compel_price }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+Вам нужно войти в свой аккаунт!
+{% endif %}
+{% endblock %}
