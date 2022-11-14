@@ -11,11 +11,17 @@ def scrape_price(part_number, brand):
             c_pn = item.find('a', class_='part-name').text
             c_pn = re.sub(r'\(.*\)', '', c_pn).strip()
             c_b = item.find('span', class_='part-producer').text.strip()
-            print(f'{i}: {c_pn} - {c_b}')
+            #print(f'{i}: {c_pn} - {c_b}')
             if c_pn == part_number and c_b == brand:
-                integer = item.find('span', class_='integer').text
-                fraction = item.find('span', class_='fraction').text
-                print(f'Found {c_pn} {c_b} for {integer}.{fraction}')
-                return float((integer + fraction).replace(',', '.'))
+                try:
+                    quantity = item.find('span', class_='part-qty').text.strip()
+                except:
+                    quantitu = '0'
+                try:
+                    integer = item.find('span', class_='integer').text
+                    fraction = item.find('span', class_='fraction').text
+                    return str(float((integer + fraction).replace(',', '.'))) + ' / ' + quantity
+                except:
+                    return 'Нет данных'
     except:
-        return 0.0
+        return 'Нет данных'

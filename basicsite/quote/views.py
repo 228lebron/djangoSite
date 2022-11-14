@@ -8,7 +8,13 @@ from .scraper import scrape_price
 # Create your views here.
 def index(request):
     quotes = Quote.objects.all()
-    return render(request, 'home.html', {'quotes': quotes})
+    current_user_groups = request.user.groups.values_list("name", flat=True)
+    context = {
+        'quotes': quotes,
+        "is_sale": "Sale" in current_user_groups,
+        "is_product_man": "Product" in current_user_groups,
+    }
+    return render(request, 'home.html', context)
 
 def update(request):
     quotes = Quote.objects.all()
@@ -18,3 +24,10 @@ def update(request):
     #return render(request, 'home.html', {'quotes': quotes})
     #return redirect('home')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def add_quote(request):
+    pass
+
+
+
+

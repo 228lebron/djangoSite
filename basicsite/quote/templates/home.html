@@ -20,20 +20,36 @@ tr:nth-child(even) {
     display: inline-block; /* Строчно-блочный элемент */
     background: #8C959D; /* Серый цвет фона */
     color: #fff; /* Белый цвет текста */
-    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    padding: 0.5rem 1rem; /* Поля вокруг текста */
     text-decoration: none; /* Убираем подчёркивание */
-    border-radius: 3px; /* Скругляем уголки */
+    border-radius: 6px; /* Скругляем уголки */
    }
 </style>
+{% if user.is_superuser %}
+<a href="{% url 'add_quote' %}" class="btn">Добавить запрос</a>
 <a href="{% url 'update_competitors' %}" class="btn">Обновить конкурентов</a>
+{% endif %}
+{% if is_editor %}
+<a href="{% url 'add_quote' %}" class="btn">Добавить запрос</a>
+{% endif %}
+{% if is_editor %}
+<a href="{% url 'add_quote' %}" class="btn">Добавить запрос</a>
+<a href="{% url 'update_competitors' %}" class="btn">Обновить конкурентов</a>
+{% endif %}
+<br>
+<br>
+
+
 <table>
     <tr>
-        <th>Part Number</th>
-        <th>Brand</th>
-        <th>Compel price</th>
+        <th>Дата</th>
+        <th>Название</th>
+        <th>Бренд</th>
+        <th>Компэл</th>
     </tr>
     {% for q in quotes %}
     <tr>
+        <td>{{ q.date }}</td>
         <td>{{ q.part_number }}</td>
         <td>{{ q.brand }}</td>
         <td>{{ q.compel_price }}</td>
